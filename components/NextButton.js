@@ -10,18 +10,22 @@ export default function NextButton( { onPress } ) {
 
 const styles = StyleSheet.create({
   nextButton: {
-    fontSize: 50,
-    backgroundColor: '#8c909c',
+    fontSize: 100,
+    backgroundColor: '#9DFE94',
     color: '#ffffff',
     height: '9%',
-    // fontFamily: 'Cabin',
     fontWeight: 'bold',
-  },
-  nextText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    position: 'absolute',
-    textAlign: 'left',
-  }
+    height: 60,
 
+  },
+
+  nextText: {
+    color: '#454040',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 18,
+    letterSpacing: 1,
+    paddingTop: 17,
+
+  }
 });

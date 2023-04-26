@@ -1,16 +1,25 @@
 import * as WebBrowser from 'expo-web-browser';
-import React, { useEffect, useCallback, useState } from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react';
+import { Platform, StyleSheet, Text } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 
-import { MonoText } from '../components/StyledText';
-import HabitLayout from '../screens/HabitLayout';
-import QuestionLayout from '../screens/QuestionLayout';
-import HappyFeelingsLayout from '../screens/HappyFeelingsLayout';
-import MindfulnessLayout from '../screens/MindfulnessLayout';
-import ContextLayout from '../screens/ContextLayout';
-// import NavigationBar from '../navigation/BottomTabNavigator';
+import HabitLayout from './HabitLayout';
+import QuestionLayout from './QuestionLayout';
+
+import HappyFeelingsLayout from './HappyFeelingsLayout';
+import SadFeelingsLayout from './SadFeelingsLayout';
+import AngryFeelingsLayout from './AngryFeelingsLayout';
+import FearFeelingsLayout from './FearFeelingsLayout';
+
+import LonelyFeelingsLayout from './LonelyFeelingsLayout';
+
+import MindfulnessLayout from './MindfulnessLayout';
+import DistressLayout from './DistressLayout';
+import FeelingsLayout from './FeelingsLayout';
+import RelationshipsLayout from './RelationshipsLayout';
+
+import ContextLayout from './ContextLayout';
+
 
 export default function HomeScreen() {
   const [pageAnswer, setPageAnswer] = useState(null)
@@ -25,7 +34,10 @@ export default function HomeScreen() {
         answer TEXT NOT NULL DEFAULT '')
       `);
     });
-  }, []);
+  }, 
+[]);
+
+
 
   const saveResponse = (question) => {
     const db = SQLite.openDatabase("diaryCard")
@@ -34,6 +46,13 @@ export default function HomeScreen() {
     });
   }
 
+  const readResponse = (question) => {
+    const db = SQLite.openDatabase("diaryCard")
+    const result = db.executeSql(`SELECT answer FROM responses WHERE question = ${question}`)
+    console.log(result)
+  }
+  
+
   const handleNextPress = () => {
     setCurrentPageNumber(currentPageNumber + 1 == pages.length ? 0 : currentPageNumber + 1);
   }
@@ -41,43 +60,98 @@ export default function HomeScreen() {
   const handleSaveAndNext = (question) => {
     saveResponse(question)
     handleNextPress()
+    readResponse()
   }
 
   const pages = [
     <HabitLayout
-      question={`How strong was \n your urge to gamble?`}
+      question={`How strong was \n your urge to order Uber eats?`}
       pageAnswer={pageAnswer}
       handleSaveAndNext={handleSaveAndNext}
+      readResponse={readResponse}
       setPageAnswer={setPageAnswer}
     />,
     <QuestionLayout
-      question="Have you gambled today?"
+      question="Did you order Uber eats today?"
       handleSaveAndNext={handleSaveAndNext}
       setPageAnswer={setPageAnswer}
+      readResponse={readResponse}
       pageAnswer={pageAnswer}
     />,
     <HappyFeelingsLayout
-      question="How joyful were you today?"
-      handleSaveAndNext={handleSaveAndNext}
-      setPageAnswer={setPageAnswer}
-      pageAnswer={pageAnswer}
-    />,
-    <MindfulnessLayout
-      question="Which skills have you practised today?"
-      handleSaveAndNext={handleSaveAndNext}
-      setPageAnswer={setPageAnswer}
-      pageAnswer={pageAnswer}
-    />,
-    <ContextLayout
-    question="Environment"
+    question="How happy did you feel today?"
     handleSaveAndNext={handleSaveAndNext}
     setPageAnswer={setPageAnswer}
+    readResponse={readResponse}
     pageAnswer={pageAnswer}
   />,
-
+    <SadFeelingsLayout
+      question="How sad did you feel today?"
+      handleSaveAndNext={handleSaveAndNext}
+      setPageAnswer={setPageAnswer}
+      readResponse={readResponse}
+      pageAnswer={pageAnswer}
+    />,
+    <FearFeelingsLayout
+      question="How fearful did you feel today?"
+      handleSaveAndNext={handleSaveAndNext}
+      setPageAnswer={setPageAnswer}
+      readResponse={readResponse}
+      pageAnswer={pageAnswer}
+    />,
+    <AngryFeelingsLayout
+      question="How angry did you feel today?"
+      handleSaveAndNext={handleSaveAndNext}
+      setPageAnswer={setPageAnswer}
+      readResponse={readResponse}
+      pageAnswer={pageAnswer}
+    />,
+    
+    <LonelyFeelingsLayout
+      question="How lonely did you feel today?"
+      handleSaveAndNext={handleSaveAndNext}
+      setPageAnswer={setPageAnswer}
+      readResponse={readResponse}
+      pageAnswer={pageAnswer}
+    />,
+   
+    <MindfulnessLayout
+      question="Mindfulness"
+      handleSaveAndNext={handleSaveAndNext}
+      setPageAnswer={setPageAnswer}
+      readResponse={readResponse}
+      pageAnswer={pageAnswer}
+    />,
+    <DistressLayout
+      question="Distress"
+      handleSaveAndNext={handleSaveAndNext}
+      setPageAnswer={setPageAnswer}
+      readResponse={readResponse}
+      pageAnswer={pageAnswer}
+     />,
+     <FeelingsLayout
+        question="Emotions"
+        handleSaveAndNext={handleSaveAndNext}
+        setPageAnswer={setPageAnswer}
+        readResponse={readResponse}
+        pageAnswer={pageAnswer}
+     />,
+     <RelationshipsLayout
+        question="Relationships"
+        handleSaveAndNext={handleSaveAndNext}
+        setPageAnswer={setPageAnswer}
+        readResponse={readResponse}
+        pageAnswer={pageAnswer}
+      />,
+      <ContextLayout
+      question="What may have contributed to emotional responses?"
+      handleSaveAndNext={handleSaveAndNext}
+      setPageAnswer={setPageAnswer}
+      readResponse={readResponse}
+      pageAnswer={pageAnswer}
+    />,
   ];
   return pages[currentPageNumber]
-
 }
 
 HomeScreen.navigationOptions = {
@@ -121,34 +195,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  highlightedButton: {
-    backgroundColor: '#f59',
-    borderWidth: 2,
-    borderStyle: 'solid',
-    borderColor: 'gray',
-    borderRadius: 100,
-    height: 70,
-    width: 70,
-    padding: 10,
-    display: 'flex',
-    margin: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  standardButton: {
-    backgroundColor: '#9af',
-    borderWidth: 2,
-    borderStyle: 'solid',
-    borderColor: 'gray',
-    borderRadius: 100,
-    height: 70,
-    width: 70,
-    padding: 10,
-    display: 'flex',
-    margin: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   contentContainer: {
     paddingTop: 30,

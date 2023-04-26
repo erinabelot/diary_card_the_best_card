@@ -1,6 +1,5 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
-// import HappinessButton from '../components/HappinessButton'
 
 export default function GraphButtons( { questions, useSymbols, pageAnswer, setPageAnswer } ) {
   return (
@@ -31,62 +30,50 @@ export default function GraphButtons( { questions, useSymbols, pageAnswer, setPa
     alignItems: 'flex-end',
     justifyContent: 'center',
     flexDirection: 'row',
-    paddingBottom: 60,
+    paddingBottom: 90,
+    paddingTop: 40,
   },
   selectedGraphButton: {
     backgroundColor: '#ffffff',
   },
   buttonGraph: {
-    backgroundColor: '#FFC0CB',
-    height: 60,
-    width: 70,
-    borderRadius:10,
+    backgroundColor: '#F4F4F4',
+    borderRadius:4,
     margin: 10,
+    marginBottom: 110,
     shadowOffset: {
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
 
     elevation: 2,
   },
   buttonGraphSize0: {
-    height: 60,
+    height: 40,
+    width: 40,
   },
   buttonGraphSize1: {
-    height: 90,
+    height: 70,
+    width: 50,
   },
   buttonGraphSize2: {
     height: 120,
+    width: 50,
   },
   buttonGraphSize3: {
-    height: 150,
+    height: 160,
+    width: 50,
   },
   buttonGraphHighlight: {
-    backgroundColor: '#ffccff',
+    backgroundColor: '#091BBC',
   },
-
-  highlightedGraphButton: {
-    backgroundColor: '#A4A7B1',
-
-    borderRadius: 100,
-    height: 60,
-    width: 115,
-    display: 'flex',
-    margin: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
-
-    elevation: 2,
-
+   
+  Text: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 20,
+    letterSpacing: 2,
+    paddingTop: 10,
   }
 });
